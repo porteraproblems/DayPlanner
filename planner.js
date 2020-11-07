@@ -1,19 +1,29 @@
 //function to keep track of time
 function compareTime() {
-    var nowTime = parseInt(moment().format('HH'));
-    //Start from 9AM, till 5PM
-    for (time = 9; time >= 17; time++) {
-        var description = parseInt($("." + time + "hr").attr("data-i"));
-        console.log(description);
-        if (description < nowTime) {
-            $("." + time + "hr").addClass("past");
-        } else if (description == nowTime) {
-            $("." + time + "hr").addClass("present");
-        } else if (description > nowTime) {
-            $("." + time + "hr").addClass("future");
-        }
+    // var nowTime = parseInt(moment().format('HH'));
+var nowTime = moment().hour();
+var colorTime = $("textarea");
+
+//Start from 9AM, till 5PM
+colorTime.each(function () {
+    var description = parseInt($(this).attr("id"));
+    if (description < 9) {
+        description += 12;
     }
+    console.log(nowTime, description);
+    let time = $(this)[0];
+            if (nowTime === description) {
+                $(time).addClass("present");
+            } else if (nowTime > description) {
+                $(time).addClass("past");
+            } else if (nowTime < description) {
+                $(time).addClass("future");
+            }
+
+});
 }
+
+compareTime();
 
 // timestamp
 var date = new Date()
